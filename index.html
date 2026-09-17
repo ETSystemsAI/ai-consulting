@@ -1,16 +1,31 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>ETSystemsAI — AI Systems, Evaluation & Reliability</title>
+  <title>ETSystemsAI — AI Systems, Evaluation &amp; Reliability</title>
 
   <meta
     name="description"
-    content="ETSystemsAI designs and reviews production AI systems with a focus on RAG, LLM evaluation, AI reliability and AI visibility."
+    content="ETSystemsAI reviews production AI systems — RAG retrieval, LLM evaluation, reliability and AI-search visibility. Independent technical reviews for teams already running AI in production."
   >
+
+  <!-- ============================================================
+       TODO ПЕРЕД ДЕПЛОЕМ — 3 вещи:
+
+       1. CAL_LINK — заменить https://cal.com/etsystemsai/20min
+          на свой реальный. Регистрация на cal.com бесплатная,
+          создать event type "20 min — AI system review".
+
+       2. FORMSPREE_ID — заменить YOUR_FORM_ID в <form action="...">.
+          formspree.io, бесплатный план: 50 писем/мес, без бэкенда,
+          работает на GitHub Pages. Альтернатива — tally.so.
+
+       3. Блок с отзывом Sinus помечен <!-- TESTIMONIAL -->.
+          Раскомментировать и вставить реальный текст, когда клиент
+          подтвердит. Без подтверждения — не публиковать.
+       ============================================================ -->
 
   <style>
     :root {
@@ -37,6 +52,11 @@
 
     html {
       scroll-behavior: smooth;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { transition: none !important; }
     }
 
     body {
@@ -74,6 +94,13 @@
       color: inherit;
     }
 
+    a:focus-visible,
+    button:focus-visible,
+    input:focus-visible {
+      outline: 2px solid var(--violet);
+      outline-offset: 3px;
+    }
+
     .container {
       width: min(
         calc(100% - 48px),
@@ -93,6 +120,7 @@
       display: flex;
       align-items: center;
       justify-content: space-between;
+      gap: 20px;
     }
 
     .logo {
@@ -114,6 +142,12 @@
       color: transparent;
     }
 
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 28px;
+    }
+
     .nav-links {
       display: flex;
       gap: 28px;
@@ -131,12 +165,28 @@
       color: var(--text);
     }
 
+    .nav-cta {
+      padding: 9px 15px;
+
+      border-radius: 10px;
+
+      background: var(--text);
+      color: #fff;
+
+      font-size: 13px;
+      font-weight: 700;
+
+      text-decoration: none;
+
+      white-space: nowrap;
+    }
+
     /* =========================
        HERO
     ========================== */
 
     .hero {
-      padding: 80px 0 90px;
+      padding: 78px 0 84px;
     }
 
     .eyebrow {
@@ -150,11 +200,8 @@
 
       color: var(--violet);
 
-      font-size: 12px;
-      font-weight: 750;
-
-      letter-spacing: 0.09em;
-      text-transform: uppercase;
+      font-size: 13px;
+      font-weight: 650;
     }
 
     h1 {
@@ -163,12 +210,12 @@
       margin: 25px 0 25px;
 
       font-size: clamp(
-        48px,
-        7vw,
-        82px
+        44px,
+        6.6vw,
+        78px
       );
 
-      line-height: 0.98;
+      line-height: 0.99;
 
       letter-spacing: -0.055em;
     }
@@ -189,19 +236,26 @@
     }
 
     .hero-description {
-      max-width: 760px;
+      max-width: 700px;
 
       font-size: 21px;
 
       color: var(--muted);
 
-      margin-bottom: 30px;
+      margin-bottom: 28px;
     }
 
     .hero-buttons {
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
+
+      margin-bottom: 18px;
+    }
+
+    .hero-note {
+      font-size: 14px;
+      color: var(--muted);
     }
 
     .button {
@@ -210,13 +264,13 @@
       align-items: center;
       justify-content: center;
 
-      padding: 13px 19px;
+      padding: 14px 22px;
 
       border-radius: 12px;
 
       text-decoration: none;
 
-      font-size: 14px;
+      font-size: 15px;
       font-weight: 700;
 
       transition:
@@ -255,29 +309,17 @@
     }
 
     .section-heading {
-      max-width: 700px;
+      max-width: 720px;
       margin-bottom: 32px;
-    }
-
-    .section-label {
-      margin-bottom: 12px;
-
-      color: var(--violet);
-
-      font-size: 12px;
-      font-weight: 800;
-
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
     }
 
     h2 {
       margin: 0 0 15px;
 
       font-size: clamp(
-        34px,
-        5vw,
-        48px
+        32px,
+        4.6vw,
+        46px
       );
 
       line-height: 1.05;
@@ -291,6 +333,100 @@
       color: var(--muted);
 
       font-size: 18px;
+    }
+
+    /* =========================
+       LEAD MAGNET
+    ========================== */
+
+    .lead {
+      border-top: 1px solid var(--line);
+
+      padding: 58px 0;
+    }
+
+    .lead-inner {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr;
+      gap: 48px;
+      align-items: center;
+
+      padding: 40px;
+
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+
+      background:
+        linear-gradient(
+          115deg,
+          rgba(116, 86, 232, 0.07),
+          rgba(43, 181, 154, 0.06)
+        ),
+        var(--surface);
+    }
+
+    .lead h2 {
+      font-size: clamp(28px, 3.4vw, 36px);
+      margin-bottom: 12px;
+    }
+
+    .lead p {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 16px;
+      max-width: 52ch;
+    }
+
+    .lead-form {
+      display: grid;
+      gap: 10px;
+    }
+
+    .lead-form input {
+      width: 100%;
+
+      padding: 14px 16px;
+
+      border: 1px solid var(--line);
+      border-radius: 12px;
+
+      background: #fff;
+
+      font-family: inherit;
+      font-size: 15px;
+
+      color: var(--text);
+    }
+
+    .lead-form input::placeholder {
+      color: #9aa4b2;
+    }
+
+    .lead-form button {
+      padding: 14px 18px;
+
+      border: none;
+      border-radius: 12px;
+
+      background: var(--text);
+      color: #fff;
+
+      font-family: inherit;
+      font-size: 15px;
+      font-weight: 700;
+
+      cursor: pointer;
+
+      transition: transform 0.2s ease;
+    }
+
+    .lead-form button:hover {
+      transform: translateY(-2px);
+    }
+
+    .lead-fineprint {
+      font-size: 13px;
+      color: var(--muted);
     }
 
     /* =========================
@@ -312,7 +448,7 @@
       display: flex;
       flex-direction: column;
 
-      min-height: 420px;
+      min-height: 430px;
 
       padding: 30px;
 
@@ -324,26 +460,39 @@
       background:
         rgba(255, 255, 255, 0.82);
 
-      box-shadow:
-        0 10px 40px rgba(30, 40, 60, 0.035);
-
       transition:
         transform 0.25s ease,
         box-shadow 0.25s ease;
     }
 
     .service-card:hover {
-      transform: translateY(-5px);
+      transform: translateY(-4px);
 
       box-shadow:
-        0 20px 55px rgba(30, 40, 60, 0.09);
+        0 18px 50px rgba(30, 40, 60, 0.08);
     }
 
-    .service-number {
-      color: var(--muted);
+    .service-card.featured {
+      border-color: rgba(116, 86, 232, 0.45);
 
-      font-size: 13px;
-      font-weight: 800;
+      box-shadow:
+        0 14px 45px rgba(116, 86, 232, 0.10);
+    }
+
+    .service-flag {
+      position: absolute;
+      top: -12px;
+      left: 26px;
+
+      padding: 5px 11px;
+
+      border-radius: 999px;
+
+      background: var(--violet);
+      color: #fff;
+
+      font-size: 12px;
+      font-weight: 700;
     }
 
     .service-tag {
@@ -351,22 +500,20 @@
 
       align-self: flex-start;
 
-      margin-top: 22px;
-
-      padding: 5px 9px;
+      padding: 5px 10px;
 
       border-radius: 999px;
 
       background: var(--surface-soft);
 
-      font-size: 11px;
-      font-weight: 750;
+      font-size: 12px;
+      font-weight: 650;
 
       color: var(--muted);
     }
 
     .service-card h3 {
-      margin: 20px 0 12px;
+      margin: 18px 0 10px;
 
       font-size: 26px;
 
@@ -399,12 +546,13 @@
     .service-bottom {
       margin-top: auto;
 
-      padding-top: 25px;
+      padding-top: 24px;
     }
 
     .price {
       font-weight: 800;
-      font-size: 15px;
+      font-size: 22px;
+      letter-spacing: -0.02em;
     }
 
     .duration {
@@ -413,6 +561,21 @@
       color: var(--muted);
 
       font-size: 13px;
+    }
+
+    .service-link {
+      display: inline-block;
+
+      margin-top: 14px;
+
+      font-size: 14px;
+      font-weight: 700;
+
+      color: var(--violet);
+
+      text-decoration: none;
+
+      border-bottom: 1px solid rgba(116, 86, 232, 0.35);
     }
 
     /* =========================
@@ -434,9 +597,9 @@
       margin: 0 0 18px;
 
       font-size: clamp(
-        30px,
-        4vw,
-        42px
+        28px,
+        3.8vw,
+        40px
       );
 
       line-height: 1.1;
@@ -445,7 +608,7 @@
     }
 
     .about-intro p {
-      max-width: 560px;
+      max-width: 58ch;
 
       margin: 0 0 16px;
 
@@ -517,6 +680,9 @@
     }
 
     .work-card {
+      display: flex;
+      flex-direction: column;
+
       padding: 27px;
 
       border:
@@ -546,13 +712,61 @@
     .work-label {
       color: var(--emerald);
 
-      font-size: 11px;
+      font-size: 12px;
 
-      font-weight: 800;
+      font-weight: 700;
+    }
 
-      text-transform: uppercase;
+    .metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
 
-      letter-spacing: 0.1em;
+      margin-top: 18px;
+      padding-top: 16px;
+
+      border-top: 1px solid var(--line);
+    }
+
+    .metric {
+      padding: 6px 10px;
+
+      border-radius: 8px;
+
+      background: var(--surface-soft);
+
+      font-size: 12px;
+      font-weight: 650;
+
+      color: var(--text);
+    }
+
+    .quote {
+      margin: 26px 0 0;
+
+      padding: 26px 30px;
+
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--emerald);
+      border-radius: 14px;
+
+      background: var(--surface);
+    }
+
+    .quote p {
+      margin: 0 0 12px;
+
+      font-size: 18px;
+
+      max-width: 70ch;
+    }
+
+    .quote footer {
+      padding: 0;
+      border: none;
+
+      font-size: 14px;
+      color: var(--muted);
     }
 
     /* =========================
@@ -562,7 +776,7 @@
     .cta-section {
       text-align: center;
 
-      padding: 75px 0;
+      padding: 72px 0;
     }
 
     .cta-section h2 {
@@ -573,21 +787,28 @@
     }
 
     .cta-section p {
-      max-width: 650px;
+      max-width: 620px;
 
       margin:
-        0 auto 30px;
+        0 auto 28px;
 
       color: var(--muted);
 
       font-size: 18px;
     }
 
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
     /* =========================
        FOOTER
     ========================== */
 
-    footer {
+    footer.site-footer {
       padding: 30px 0 40px;
 
       border-top:
@@ -623,6 +844,14 @@
        MOBILE
     ========================== */
 
+    @media (max-width: 950px) {
+      .lead-inner {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding: 32px;
+      }
+    }
+
     @media (max-width: 850px) {
 
       .services,
@@ -642,7 +871,7 @@
 
       .hero {
         padding:
-          65px 0 75px;
+          60px 0 70px;
       }
     }
 
@@ -661,7 +890,7 @@
       }
 
       h1 {
-        font-size: 48px;
+        font-size: 44px;
       }
 
       .hero-description {
@@ -673,7 +902,11 @@
       }
 
       .cta-section {
-        padding: 65px 0;
+        padding: 62px 0;
+      }
+
+      .lead-inner {
+        padding: 26px;
       }
 
       .footer-inner {
@@ -698,22 +931,32 @@
         ETSystemsAI
       </div>
 
-      <div class="nav-links">
+      <div class="nav-right">
 
-        <a href="#services">
-          Services
-        </a>
+        <div class="nav-links">
 
-        <a href="#work">
-          Selected work
-        </a>
+          <a href="#services">
+            Services
+          </a>
 
-        <a href="#about">
-          About
-        </a>
+          <a href="#work">
+            Selected work
+          </a>
 
-        <a href="#contact">
-          Contact
+          <a href="#about">
+            About
+          </a>
+
+        </div>
+
+        <!-- CAL_LINK -->
+        <a
+          class="nav-cta"
+          href="https://cal.com/etsystemsai/20min"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Book a 20-min review
         </a>
 
       </div>
@@ -732,48 +975,134 @@
       <div class="container">
 
         <div class="eyebrow">
-          AI Systems · RAG · LLM Evaluation · AI Reliability
+          Independent reviews of production AI systems
         </div>
 
 
         <h1>
-          Make your AI system
+          Find out where your AI system
           <span class="gradient-text">
-            measurable, reliable, and useful
+            actually breaks
           </span>
         </h1>
 
 
         <p class="hero-description">
-          ETSystemsAI helps teams understand what their AI systems
-          actually do — where they fail, why they fail, and what to fix first.
+          Your RAG assistant answers confidently and sometimes wrongly,
+          and nobody on the team can say which of the two is happening
+          today. I measure that, name the failure modes, and tell you
+          what to fix first.
         </p>
 
 
         <div class="hero-buttons">
 
-          <!-- GMAIL CONTACT -->
-
+          <!-- CAL_LINK -->
           <a
             class="button button-primary"
-            href="https://mail.google.com/mail/?view=cm&fs=1&to=e.kate.taratuta@gmail.com&su=AI%20Systems%20Review"
+            href="https://cal.com/etsystemsai/20min"
             target="_blank"
             rel="noopener noreferrer"
           >
-            Discuss an AI problem →
+            Book a 20-min review
           </a>
 
-
-          <!-- LINKEDIN -->
 
           <a
             class="button button-secondary"
-            href="https://www.linkedin.com/in/ekaterina-taratuta/"
-            target="_blank"
-            rel="noopener noreferrer"
+            href="#snapshot"
           >
-            LinkedIn
+            Get a free visibility snapshot
           </a>
+
+        </div>
+
+        <p class="hero-note">
+          No pitch deck. You describe the system, I tell you on the call
+          whether it is worth a paid review.
+        </p>
+
+      </div>
+
+    </section>
+
+
+    <!-- LEAD MAGNET -->
+
+    <section
+      id="snapshot"
+      class="lead"
+    >
+
+      <div class="container">
+
+        <div class="lead-inner">
+
+          <div>
+
+            <h2>
+              Free AI visibility snapshot
+            </h2>
+
+            <p>
+              I run your company through 10 buyer-intent prompts in
+              ChatGPT, Perplexity and Google AI Overviews, and send back
+              where you appear, where a competitor appears instead, and
+              why.
+            </p>
+
+            <p>
+              One page, no call required, usually within two working days.
+            </p>
+
+          </div>
+
+          <!-- FORMSPREE_ID: заменить YOUR_FORM_ID -->
+          <form
+            class="lead-form"
+            action="https://formspree.io/f/YOUR_FORM_ID"
+            method="POST"
+          >
+
+            <label
+              for="company"
+              style="font-size:14px;font-weight:650;"
+            >
+              Company website
+            </label>
+
+            <input
+              id="company"
+              type="url"
+              name="company_url"
+              placeholder="https://yourcompany.com"
+              required
+            >
+
+            <label
+              for="email"
+              style="font-size:14px;font-weight:650;"
+            >
+              Where to send it
+            </label>
+
+            <input
+              id="email"
+              type="email"
+              name="email"
+              placeholder="you@company.com"
+              required
+            >
+
+            <button type="submit">
+              Send me the snapshot
+            </button>
+
+            <p class="lead-fineprint">
+              One email with the snapshot. No list, no sequence.
+            </p>
+
+          </form>
 
         </div>
 
@@ -790,21 +1119,14 @@
 
         <div class="section-heading">
 
-          <div class="section-label">
-            Services
-          </div>
-
           <h2>
-            Focused AI reviews.
-            <br>
-            Answers that move things forward
+            Three ways to work together
           </h2>
 
           <p>
-            Small, outcome-oriented engagements for teams
-            that already have an AI product, prototype,
-            or visibility problem — and need an expert
-            outside perspective.
+            Fixed-scope engagements for teams that already have an AI
+            product, a prototype, or a visibility problem — and need an
+            outside technical opinion before spending another quarter on it.
           </p>
 
         </div>
@@ -813,14 +1135,14 @@
         <div class="services">
 
 
-          <article class="service-card">
+          <article class="service-card featured">
 
-            <div class="service-number">
-              01
+            <div class="service-flag">
+              Start here
             </div>
 
             <div class="service-tag">
-              AI SEARCH
+              AI search
             </div>
 
             <h3>
@@ -835,19 +1157,20 @@
             <ul>
 
               <li>
-                20–30 buyer-intent prompts
+                25–30 buyer-intent prompts across ChatGPT,
+                Perplexity, Google AI Overviews
               </li>
 
               <li>
-                AI answer & competitor analysis
+                Competitor answer and citation analysis
               </li>
 
               <li>
-                Citation and semantic gaps
+                Semantic and content gaps that keep you out of answers
               </li>
 
               <li>
-                Prioritized action plan
+                Prioritized action plan your team can execute
               </li>
 
             </ul>
@@ -855,12 +1178,22 @@
             <div class="service-bottom">
 
               <div class="price">
-                From €149
+                €900
               </div>
 
               <div class="duration">
-                Delivered within 48h
+                Delivered within 5 working days
               </div>
+
+              <!-- CAL_LINK -->
+              <a
+                class="service-link"
+                href="https://cal.com/etsystemsai/20min"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Book a 20-min review
+              </a>
 
             </div>
 
@@ -869,12 +1202,8 @@
 
           <article class="service-card">
 
-            <div class="service-number">
-              02
-            </div>
-
             <div class="service-tag">
-              ARCHITECTURE
+              Architecture
             </div>
 
             <h3>
@@ -889,19 +1218,19 @@
             <ul>
 
               <li>
-                Architecture & data-flow review
+                Architecture and data-flow review
               </li>
 
               <li>
-                Retrieval / RAG analysis
+                Retrieval quality analysis on your own queries
               </li>
 
               <li>
-                Failure points & reliability risks
+                Failure points and reliability risks, ranked by impact
               </li>
 
               <li>
-                Prioritized technical roadmap
+                Technical roadmap with effort estimates
               </li>
 
             </ul>
@@ -909,12 +1238,22 @@
             <div class="service-bottom">
 
               <div class="price">
-                From €199
+                €2,500
               </div>
 
               <div class="duration">
-                3–5 day review
+                2 weeks, includes a walkthrough call
               </div>
+
+              <!-- CAL_LINK -->
+              <a
+                class="service-link"
+                href="https://cal.com/etsystemsai/20min"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Book a 20-min review
+              </a>
 
             </div>
 
@@ -923,16 +1262,12 @@
 
           <article class="service-card">
 
-            <div class="service-number">
-              03
-            </div>
-
             <div class="service-tag">
-              EVALUATION
+              Evaluation
             </div>
 
             <h3>
-              LLM Evaluation Review
+              LLM Evaluation Setup
             </h3>
 
             <div class="service-question">
@@ -943,19 +1278,19 @@
             <ul>
 
               <li>
-                Evaluation criteria & test cases
+                Evaluation criteria tied to your business outcomes
               </li>
 
               <li>
-                Golden examples / benchmark design
+                Golden dataset and benchmark design
               </li>
 
               <li>
-                Failure-mode taxonomy
+                Failure-mode taxonomy from real production traces
               </li>
 
               <li>
-                Recommendations for production evals
+                Working eval pipeline your engineers can run in CI
               </li>
 
             </ul>
@@ -963,141 +1298,27 @@
             <div class="service-bottom">
 
               <div class="price">
-                From €250
+                €3,500
               </div>
 
               <div class="duration">
-                Scope depends on system size
+                3–4 weeks, scoped after the call
               </div>
+
+              <!-- CAL_LINK -->
+              <a
+                class="service-link"
+                href="https://cal.com/etsystemsai/20min"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Book a 20-min review
+              </a>
 
             </div>
 
           </article>
 
-
-        </div>
-
-      </div>
-
-    </section>
-
-
-    <!-- ABOUT -->
-
-    <section id="about">
-
-      <div class="container">
-
-        <div class="section-heading">
-
-          <div class="section-label">
-            About
-          </div>
-
-          <h2>
-            What we bring
-          </h2>
-
-        </div>
-
-
-        <div class="positioning">
-
-
-          <div class="about-intro">
-
-            <h3>
-              Engineering expertise for AI systems
-              that work in the real world
-            </h3>
-
-            <p>
-              ETSystemsAI combines machine learning engineering,
-              data systems, AI evaluation, and research-driven
-              measurement to design and improve production AI systems.
-            </p>
-
-            <p>
-              The focus is not only whether an AI system can produce
-              an answer, but whether it is reliable, measurable,
-              and useful for the business.
-            </p>
-
-          </div>
-
-
-          <div class="expertise">
-
-
-            <div class="fact">
-
-              <div class="fact-title">
-                Production AI
-              </div>
-
-              <div class="fact-text">
-                Document Intelligence · RAG · ML Systems · AI Agents
-              </div>
-
-            </div>
-
-
-            <div class="fact">
-
-              <div class="fact-title">
-                AI Evaluation
-              </div>
-
-              <div class="fact-text">
-                LLM evaluation · benchmarks · evaluation pipelines ·
-                failure analysis
-              </div>
-
-            </div>
-
-
-            <div class="fact">
-
-              <div class="fact-title">
-                AI Reliability
-              </div>
-
-              <div class="fact-text">
-                Retrieval quality · system behavior · failure modes ·
-                monitoring
-              </div>
-
-            </div>
-
-
-            <div class="fact">
-
-              <div class="fact-title">
-                AI Search & Knowledge
-              </div>
-
-              <div class="fact-text">
-                AI visibility · answer readiness · semantic gaps ·
-                knowledge systems
-              </div>
-
-            </div>
-
-
-          </div>
-
-        </div>
-
-
-        <div class="founder-note">
-
-          <strong>
-            Ekaterina Taratuta, PhD
-          </strong>
-
-          <span>
-            Founder &amp; Data &amp; AI Systems Architect
-          </span>
 
         </div>
 
@@ -1114,14 +1335,13 @@
 
         <div class="section-heading">
 
-          <div class="section-label">
-            Selected work
-          </div>
-
           <h2>
-            From production systems
-            to measurement
+            Selected work
           </h2>
+
+          <p>
+            Systems I built and measured, not slideware.
+          </p>
 
         </div>
 
@@ -1140,11 +1360,16 @@
             </h3>
 
             <p>
-              Production document intelligence system
-              processing 500K+ financial documents/month,
-              combining OCR correction, entity matching,
-              structured LLM correction and feedback loops.
+              Document intelligence system combining OCR correction,
+              entity matching, structured LLM correction and human
+              feedback loops. Live in production.
             </p>
+
+            <div class="metrics">
+              <span class="metric">500K+ documents / month</span>
+              <span class="metric">OCR + entity matching</span>
+              <span class="metric">Deployed and maintained</span>
+            </div>
 
           </article>
 
@@ -1152,7 +1377,7 @@
           <article class="work-card">
 
             <div class="work-label">
-              AI Search
+              AI search
             </div>
 
             <h3>
@@ -1160,10 +1385,16 @@
             </h3>
 
             <p>
-              AI-search visibility and RAG retrieval audit
-              system focused on answer readiness,
-              semantic gaps and competitive visibility.
+              The pipeline behind the visibility audit: automated prompt
+              runs across AI search engines, answer parsing, competitor
+              citation tracking and gap scoring.
             </p>
+
+            <div class="metrics">
+              <span class="metric">30 prompts per run</span>
+              <span class="metric">3 AI search engines</span>
+              <span class="metric">Automated HTML report</span>
+            </div>
 
           </article>
 
@@ -1179,13 +1410,156 @@
             </h3>
 
             <p>
-              Research initiative focused on LLM evaluation,
-              judge calibration, evaluation reliability
-              and the measurement of AI system quality.
+              Ongoing research into LLM-as-judge calibration, evaluation
+              reliability and what it actually takes to measure AI system
+              quality without fooling yourself.
             </p>
+
+            <div class="metrics">
+              <span class="metric">Judge calibration</span>
+              <span class="metric">Eval reliability</span>
+              <span class="metric">Failure taxonomies</span>
+            </div>
 
           </article>
 
+
+        </div>
+
+
+        <!-- TESTIMONIAL — раскомментировать только после
+             письменного согласия клиента. Вставить реальную
+             цитату, имя и должность. -->
+        <!--
+        <blockquote class="quote">
+
+          <p>
+            [Две строки от клиента: что было сломано и что изменилось
+            после работы. Конкретика важнее похвалы.]
+          </p>
+
+          <footer>
+            [Имя], [должность], [компания]
+          </footer>
+
+        </blockquote>
+        -->
+
+
+      </div>
+
+    </section>
+
+
+    <!-- ABOUT -->
+
+    <section id="about">
+
+      <div class="container">
+
+        <div class="positioning">
+
+
+          <div class="about-intro">
+
+            <h3>
+              Engineering expertise for AI systems
+              that run in the real world
+            </h3>
+
+            <p>
+              ETSystemsAI combines machine learning engineering, data
+              systems, AI evaluation and research-driven measurement to
+              design and improve production AI systems.
+            </p>
+
+            <p>
+              The question is never only whether an AI system can produce
+              an answer. It is whether that answer is reliable, whether
+              you can measure it, and whether it is useful to the business.
+            </p>
+
+            <p>
+              Thirty years in research methodology before the switch to
+              ML engineering. That is where the measurement obsession
+              comes from.
+            </p>
+
+          </div>
+
+
+          <div class="expertise">
+
+
+            <div class="fact">
+
+              <div class="fact-title">
+                Production AI
+              </div>
+
+              <div class="fact-text">
+                Document intelligence, RAG, ML systems, AI agents
+              </div>
+
+            </div>
+
+
+            <div class="fact">
+
+              <div class="fact-title">
+                AI evaluation
+              </div>
+
+              <div class="fact-text">
+                LLM evaluation, benchmarks, evaluation pipelines,
+                failure analysis
+              </div>
+
+            </div>
+
+
+            <div class="fact">
+
+              <div class="fact-title">
+                AI reliability
+              </div>
+
+              <div class="fact-text">
+                Retrieval quality, system behavior, failure modes,
+                monitoring
+              </div>
+
+            </div>
+
+
+            <div class="fact">
+
+              <div class="fact-title">
+                AI search and knowledge
+              </div>
+
+              <div class="fact-text">
+                AI visibility, answer readiness, semantic gaps,
+                knowledge systems
+              </div>
+
+            </div>
+
+
+          </div>
+
+        </div>
+
+
+        <div class="founder-note">
+
+          <strong>
+            Ekaterina Taratuta, PhD
+          </strong>
+
+          <span>
+            Founder, Data &amp; AI Systems Architect
+          </span>
 
         </div>
 
@@ -1203,31 +1577,40 @@
 
       <div class="container">
 
-        <div class="section-label">
-          Start with the problem
-        </div>
-
         <h2>
-          Have an AI system
-          you're not fully confident about?
+          Have an AI system you're not fully confident about?
         </h2>
 
         <p>
-          Tell us what you're building and where
-          it feels unreliable, unclear or underperforming.
+          Twenty minutes, no slides. Tell me what you're building and
+          where it feels unreliable. If it isn't worth a paid review,
+          I'll say so on the call.
         </p>
 
 
-        <!-- GMAIL CONTACT -->
+        <div class="cta-buttons">
 
-        <a
-          class="button button-primary"
-          href="https://mail.google.com/mail/?view=cm&fs=1&to=e.kate.taratuta@gmail.com&su=AI%20System%20Review"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Tell me about it →
-        </a>
+          <!-- CAL_LINK -->
+          <a
+            class="button button-primary"
+            href="https://cal.com/etsystemsai/20min"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Book a 20-min review
+          </a>
+
+
+          <a
+            class="button button-secondary"
+            href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=e.kate.taratuta@gmail.com&amp;su=AI%20System%20Review"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Email instead
+          </a>
+
+        </div>
 
       </div>
 
@@ -1238,7 +1621,7 @@
 
   <!-- FOOTER -->
 
-  <footer>
+  <footer class="site-footer">
 
     <div class="container">
 
@@ -1251,8 +1634,6 @@
 
         <div class="footer-links">
 
-          <!-- LINKEDIN -->
-
           <a
             href="https://www.linkedin.com/in/ekaterina-taratuta/"
             target="_blank"
@@ -1262,10 +1643,8 @@
           </a>
 
 
-          <!-- GMAIL -->
-
           <a
-            href="https://mail.google.com/mail/?view=cm&fs=1&to=e.kate.taratuta@gmail.com"
+            href="https://mail.google.com/mail/?view=cm&amp;fs=1&amp;to=e.kate.taratuta@gmail.com"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -1282,4 +1661,3 @@
 
 </body>
 </html>
-
